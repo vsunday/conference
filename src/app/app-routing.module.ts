@@ -4,7 +4,8 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AppComponent } from './app.component';
 
 const appRoutes: Routes = [
-  {path: '', redirectTo: 'conference', pathMatch: 'full'},
+  {path: 'conference', loadChildren: './conference/conference.module#ConferenceModule'},
+  {path: '**', redirectTo: 'conference', pathMatch: 'full'},
 ]
 
 @NgModule({

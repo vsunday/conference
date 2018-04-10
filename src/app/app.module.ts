@@ -4,13 +4,12 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
-import { ConferenceModule } from './conference/conference.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 
 import { ConferenceService }  from './conference/conference.service';
-
+import { DataService } from './util/data.service';
 
 @NgModule({
   declarations: [
@@ -21,10 +20,9 @@ import { ConferenceService }  from './conference/conference.service';
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    ConferenceModule,
     NgbModule.forRoot(),
   ],
-  providers: [ConferenceService,],
+  providers: [ConferenceService, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
