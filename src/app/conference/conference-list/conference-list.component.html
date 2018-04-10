@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="list-group">
+    <app-conference-item
+      *ngFor="let conference of conferences; let i = index"
+      [conference]="conference"
+      [index]="i"></app-conference-item>
+  </div>
+</div>

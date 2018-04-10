@@ -1,0 +1,104 @@
+<div class="row">
+  <div class="col">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="conference name"
+          ngModel
+          required
+          class="form-control">
+      </div>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          id="startdate"
+          name="startdate"
+          placeholder="start date(mm/yy/dddd)"
+          pattern="\d{1,2}\/\d{1,2}\/20\d{2}"
+          ngModel
+          required
+          class="form-control">
+      </div>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          id="enddate"
+          name="enddate"
+          placeholder="end Date(mm/yy/dddd)"
+          pattern="\d{1,2}\/\d{1,2}\/20\d{2}"
+          ngModel
+          class="form-control">
+      </div>
+      <div class="input-group mb-3">
+        <textarea
+          type="text"
+          id="desc"
+          name="desc"
+          placeholder="description"
+          ngModel
+          row="3"
+          class="form-control"></textarea>
+      </div>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          id="url"
+          name="url"
+          placeholder="url"
+          ngModel
+          class="form-control">
+      </div>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          id="location"
+          name="location"
+          placeholder="location"
+          ngModel
+          class="form-control">
+      </div>
+      <div class="input-group mb-3">
+        <select class="custom-select">
+          <option selected>attendance</option>
+          <option value="1">Going</option>
+          <option value="2">Want to go</option>
+          <option value="3">Dismiss</option>
+        </select>
+      </div>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          id="participants"
+          name="participants"
+          placeholder="participants"
+          ngModel
+          class="form-control">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <div class="input-group-text">$</div>
+        </div>
+        <input
+          type="text"
+          id="price"
+          name="price"
+          placeholder="price"
+          ngModel
+          class="form-control">
+      </div>
+      <!--<div *ngIf="editMode else elseBlock">-->
+      <!--  <button type="button" class="btn btn-success">Update</button>-->
+      <!--  <button type="button" class="btn btn-light">Cancel</button>-->
+      <!--</div>-->
+      <!--<ng-template #elseBlock>-->
+      <!--  <button type="button" class="btn btn-success" (click)="log(f)">Add</button>-->
+      <!--  <button type="button" class="btn btn-light">Claer</button>-->
+      <!--</ng-template>-->
+      <button type="submit" class="btn btn-success" [disabled]="!f.valid">{{ this.editMode ? 'Update' : 'Add' }}</button>
+      <button type="button" class="btn btn-light" (click)="onClear()">{{ this.editMode ? 'Cancel' : 'Clear' }}</button>
+    </form>
+  </div>
+</div>
