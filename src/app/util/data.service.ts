@@ -10,34 +10,43 @@ import { Conference } from '../conference/conference.model';
 export class DataService {
   constructor(private httpClient: HttpClient) {}
   
-  private dbUrl = 'https://ngrd-conf.firebaseio.com/conf.json';
+  private confUrl = 'https://ngrd-conf.firebaseio.com/conf.json';
+  private dbUrl = 'https://ngrd-conf.firebaseio.com/conf/';
   
-  // getDbUrl(): string {
-  //   if (this.dbUrl == '') {
-  //     this.httpClient.get('assets/config.json')
-  //       .map((data) => {console.log(data); return data['dbUrl'];})
-  //       .subscribe((dbUrl) => {this.dbUrl = dbUrl;})
-  //   }
-  //   return this.dbUrl;
-  // }
-  
-  getAllConferences() {
-    return this.httpClient.get(this.dbUrl).map(
+  getAllConferences(): Observable<Object> {
+    return this.httpClient.get(this.confUrl).map(
       (response) => {return response;}
     );
   }
   
-  postConference(conference: Conference) {
-    return this.httpClient.post(this.dbUrl, conference).subscribe(
+  addConference(conference: Conference) {
+    return this.httpClient.post(this.confUrl, conference).subscribe(
+      (response) => {console.log(response);},
+      (error) => {console.log(error);}
+    );
+  }
+  
+  updateConference(conference: Conference) {
+    const targetUrl = this.dbUrl + conference['id'] + '.json';
+    return this.httpClient.patch(targetUrl, conference).subscribe(
+      (response) => {console.log(response);},
+      (error) => {console.log(error);}
+    );
+  }
+  
+  deleteConference(conference: Conference) {
+    const targetUrl = this.dbUrl + conference['id'] + '.json';
+    return this.httpClient.delete(targetUrl).subscribe(
       (response) => {console.log(response);},
       (error) => {console.log(error);}
     );
   }
   
   putAllConferences(conferences: Conference[]) {
-    return this.httpClient.put(this.dbUrl, conferences).subscribe(
-      (response) => {console.log(response);},
-      (error) => {console.log(error);}
-    );
+    conferences.forEach(
+      (conference) => {
+        // this.addConference(conference);
+        this.updateConference(conference);
+      })
   }
 }

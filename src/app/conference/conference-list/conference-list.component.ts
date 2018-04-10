@@ -20,10 +20,7 @@ export class ConferenceListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subs = this.cService.changed.subscribe(
       (conferences: Conference[]) => {
-        this.conferences = this.cService.getConferences();
-        // const today = new Date();
-        // this.conferences = this.cService.getConferences().filter(
-        //   (conference) => {return new Date(conference.startdate) > today});
+        this.conferences = conferences;
       })
   }
 

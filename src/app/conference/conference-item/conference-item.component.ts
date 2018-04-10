@@ -22,6 +22,6 @@ export class ConferenceItemComponent implements OnInit {
   }
   
   onDelete() {
-    this.cService.deleteConference(this.index);
+    this.cService.deleteConference(this.conference);
   }
 }

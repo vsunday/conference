@@ -28,15 +28,15 @@ export class ConferenceEditComponent implements OnInit {
         this.selectedConference = this.cService.getConference(index);
         this.cForm.setValue(new Conference());
         this.cForm.reset(this.selectedConference);
-      })
+      });
   }
 
   onSubmit(f: any) {
     const v = f.value;
     const newConference = new Conference(v.name, v.startdate, v.enddate, v.desc, v.url,
-      v.location, v.participants, v.price);
+      v.location, v.participants, v.price, v.id);
     if (this.editMode) {
-      this.cService.updateConference(this.index, newConference);
+      this.cService.updateConference(newConference);
     } else {
       this.cService.addConference(newConference);
     }
@@ -48,5 +48,6 @@ export class ConferenceEditComponent implements OnInit {
     this.index = null;
     this.cForm.reset();
     this.selectedConference = null;
+    // this.dataService.putAllConferences(this.cService.conferences);
   }
 }
