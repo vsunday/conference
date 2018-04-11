@@ -5,7 +5,7 @@ export class Conference {
     public desc: string = '',
     public url: string = '',
     public location: string = '',
-    public attendance: string = '',
+    public attendance: string = '0',
     public participants: string = '',
     public price: string = '',
     public id: string = '') {

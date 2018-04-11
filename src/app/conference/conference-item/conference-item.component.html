@@ -1,6 +1,6 @@
 <a
   style="cursor: pointer;"
-  class="list-group-item list-group-item-action"
+  [ngClass]="itemStyle()"
   [routerLink]="conference.id"
   [ngbPopover]="conference.desc"
   placement="bottom"

@@ -15,4 +15,14 @@ export class ConferenceItemComponent implements OnInit {
 
   ngOnInit() {
   }
+  
+  itemStyle() {
+    const classList = [
+      '',
+      'list-group-item-primary',
+      'list-group-item-warning',
+      'list-group-item-secondary'
+    ]
+    return 'list-group-item list-group-item-action ' + classList[this.conference.attendance];
+  }
 }
