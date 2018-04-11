@@ -1,14 +1,14 @@
 <div class="row">
   <div class="col">
     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-      <input type="hidden" id="id" name="id" ngModel>
+      <input type="hidden" id="id" name="id" [ngModel]="selectedConference?.id">
       <div class="input-group mb-3">
         <input
           type="text"
           id="name"
           name="name"
           placeholder="conference name"
-          ngModel
+          [ngModel]="selectedConference?.name"
           required
           class="form-control">
       </div>
@@ -18,8 +18,8 @@
           id="startdate"
           name="startdate"
           placeholder="start date(mm/yy/dddd)"
+          [ngModel]="selectedConference?.startdate"
           pattern="\d{1,2}\/\d{1,2}\/20\d{2}"
-          ngModel
           required
           class="form-control">
       </div>
@@ -29,8 +29,8 @@
           id="enddate"
           name="enddate"
           placeholder="end Date(mm/yy/dddd)"
+          [ngModel]="selectedConference?.enddate"
           pattern="\d{1,2}\/\d{1,2}\/20\d{2}"
-          ngModel
           class="form-control">
       </div>
       <div class="input-group mb-3">
@@ -39,7 +39,7 @@
           id="desc"
           name="desc"
           placeholder="description"
-          ngModel
+          [ngModel]="selectedConference?.desc"
           row="3"
           class="form-control"></textarea>
       </div>
@@ -49,7 +49,7 @@
           id="url"
           name="url"
           placeholder="url"
-          ngModel
+          [ngModel]="selectedConference?.url"
           class="form-control">
       </div>
       <div class="input-group mb-3">
@@ -58,12 +58,16 @@
           id="location"
           name="location"
           placeholder="location"
-          ngModel
+          [ngModel]="selectedConference?.location"
           class="form-control">
       </div>
       <div class="input-group mb-3">
-        <select class="custom-select">
-          <option selected>attendance</option>
+        <select
+          id="attendance"
+          name="attendance"
+          [ngModel]="selectedConference?.attendance"
+          class="custom-select">
+          <option value="">attendance</option>
           <option value="1">Going</option>
           <option value="2">Want to go</option>
           <option value="3">Dismiss</option>
@@ -75,7 +79,7 @@
           id="participants"
           name="participants"
           placeholder="participants"
-          ngModel
+          [ngModel]="selectedConference?.participants"
           class="form-control">
       </div>
       <div class="input-group mb-3">
@@ -87,11 +91,12 @@
           id="price"
           name="price"
           placeholder="price"
-          ngModel
+          [ngModel]="selectedConference?.price"
           class="form-control">
       </div>
       <button type="submit" class="btn btn-success" [disabled]="!f.valid">{{ this.editMode ? 'Update' : 'Add' }}</button>
       <button type="button" class="btn btn-light" (click)="onClear()">{{ this.editMode ? 'Cancel' : 'Clear' }}</button>
+      <button *ngIf="editMode" type="button" class="btn btn-danger float-right" (click)="onDelete()">Delete</button>
     </form>
   </div>
 </div>

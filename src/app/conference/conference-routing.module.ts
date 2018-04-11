@@ -5,7 +5,12 @@ import { ConferenceComponent } from './conference.component';
 import { ConferenceEditComponent } from './conference-edit/conference-edit.component';
 
 const conferenceRoutes: Routes = [
-  {path: '', component: ConferenceComponent},
+  {path: '', component: ConferenceComponent,
+    children: [
+      {path: '', component: ConferenceEditComponent},
+      {path: ':id', component: ConferenceEditComponent},
+    ]
+  },
 ]
   
 @NgModule({

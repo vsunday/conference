@@ -10,18 +10,9 @@ import { Conference } from '../conference.model';
 })
 export class ConferenceItemComponent implements OnInit {
   @Input() conference: Conference;
-  @Input() index: number;
 
   constructor(private cService: ConferenceService) { }
 
   ngOnInit() {
-  }
-
-  onSelect() {
-    this.cService.selectedIndex.next(this.index);
-  }
-  
-  onDelete() {
-    this.cService.deleteConference(this.conference);
   }
 }

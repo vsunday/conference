@@ -11,19 +11,24 @@ export class ConferenceService {
     this.dataService.getAllConferences().subscribe(
       (data) => {
         const tmp = [];
-        Object.entries(data).forEach(
-          (value) => {
-            var conference = <Conference>value[1];
-            if (conference['id'] == '' || conference['id'] == null) {
-              conference['id'] = value[0];
-            }
-            tmp.push(conference);
-        });
+        if (data != null) {
+          Object.entries(data).forEach(
+            (value) => {
+              var conference = <Conference>value[1];
+              if (conference['id'] == '' || conference['id'] == null) {
+                conference['id'] = value[0];
+              }
+              tmp.push(conference);
+          });
+        };
         this.sortConference(tmp).forEach(
             (conference) => {
-              const s = new Date(conference.startdate); const e = new Date(conference.enddate);
+              const s = new Date(conference.startdate);
               conference.startdate = (s.getMonth()+1) + '/' + s.getDate() + '/' + s.getFullYear();
-              conference.enddate = (e.getMonth()+1) + '/' + e.getDate() + '/' + e.getFullYear();
+              if (conference.enddate != null && conference.enddate != '') {
+                const e = new Date(conference.enddate);
+                conference.enddate = (e.getMonth()+1) + '/' + e.getDate() + '/' + e.getFullYear();
+              };
               this.conferences.push(conference);
             });
         this.changed.next(this.conferences.slice());
@@ -33,7 +38,6 @@ export class ConferenceService {
   
   conferences: Conference[] = [];
   
-  selectedIndex = new Subject<number>();
   changed = new Subject<Conference[]>();
   
   getConferences() {
@@ -41,26 +45,36 @@ export class ConferenceService {
       (data) => {
         this.conferences = this.sortConference(Object.values(data));
         this.changed.next(this.conferences);
-      });
+      }
+    );
   }
   
-  getConference(n: number) {
-    return this.conferences[n];
+  getConference(id: string): Conference {
+    return this.conferences.filter(
+      (conference) => {
+        return conference.id == id;
+      })[0];
   }
   
   addConference(newConference: Conference) {
-    this.dataService.addConference(newConference);
-    this.getConferences();
+    this.dataService.addConference(newConference).subscribe(
+      (response) => {
+        const id = response['name'];
+        newConference.id = id;
+        this.dataService.updateConference(newConference).subscribe(
+          () => {
+            this.getConferences();})
+        });
   }
   
   updateConference(newConference: Conference) {
-    this.dataService.updateConference(newConference);
-    this.getConferences();
+    this.dataService.updateConference(newConference).subscribe(
+      () => {this.getConferences();});
   }
   
   deleteConference(conference: Conference) {
-    this.dataService.deleteConference(conference);
-    this.getConferences();
+    this.dataService.deleteConference(conference).subscribe(
+      () => {this.getConferences();})
   }
   
   sortConference(conferences: Conference[]): Conference[] {

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 import { Conference } from '../conference.model';
@@ -14,40 +14,44 @@ import { DataService } from '../../util/data.service';
 export class ConferenceEditComponent implements OnInit {
   @ViewChild('f') cForm: NgForm;
   editMode: boolean = false;
-  index: number;
-  selectedConference: Conference = null;
+  selectedConference: Conference = new Conference();
 
-  constructor(private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute, private router: Router,
     private cService: ConferenceService, private dataService: DataService) { }
 
   ngOnInit() {
-    this.cService.selectedIndex.subscribe(
-      (index: number) => {
-        this.editMode = true;
-        this.index = index;
-        this.selectedConference = this.cService.getConference(index);
-        this.cForm.setValue(new Conference());
-        this.cForm.reset(this.selectedConference);
-      });
+    this.route.params.subscribe(
+      (params: Params) => {
+        const id = params['id'];
+        this.editMode = id != null;
+        if (this.editMode) {
+          this.selectedConference = this.cService.getConference(id);
+        };
+      })
   }
 
-  onSubmit(f: any) {
+  onSubmit(f: NgForm) {
     const v = f.value;
     const newConference = new Conference(v.name, v.startdate, v.enddate, v.desc, v.url,
-      v.location, v.participants, v.price, v.id);
+      v.location, v.attendance, v.participants, v.price, v.id);
     if (this.editMode) {
       this.cService.updateConference(newConference);
     } else {
       this.cService.addConference(newConference);
-    }
+    };
     this.cForm.reset();
+    this.router.navigate(['/conference']);
   }
   
   onClear() {
-    this.editMode = false;
-    this.index = null;
     this.cForm.reset();
+    this.editMode = false;
     this.selectedConference = null;
-    // this.dataService.putAllConferences(this.cService.conferences);
+    this.router.navigate(['/conference']);
+  }
+  
+  onDelete() {
+    this.cService.deleteConference(this.selectedConference);
+    this.router.navigate(['/conference']);
   }
 }

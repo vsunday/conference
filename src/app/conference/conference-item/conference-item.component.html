@@ -1,18 +1,15 @@
 <a
   style="cursor: pointer;"
   class="list-group-item list-group-item-action"
-  (click)="onSelect()"
+  [routerLink]="conference.id"
   [ngbPopover]="conference.desc"
   placement="bottom"
   triggers="mouseover:mouseleave">
-  <button type="button" class="close" aria-label="Close" (click)="onDelete()">
-    <span aria-hidden="true">&times;</span>
-  </button> 
   <h5 class="mb-1">{{ conference.name }}</h5>
   <p class="mb-1">
     <small class="text-muted">
-      {{ conference.startdate }} - {{ conference.enddate }}
-      <a class="text-right" [href]="conference.url" [target]="index">link</a>
+      {{ conference.startdate }} - {{ conference.enddate != '' ? conference.enddate : '(blank)' }}
+      <a class="text-right" [href]="conference.url" target="_blank">link</a>
     </small>
   </p>
 </a>

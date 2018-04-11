@@ -19,34 +19,25 @@ export class DataService {
     );
   }
   
-  addConference(conference: Conference) {
-    return this.httpClient.post(this.confUrl, conference).subscribe(
-      (response) => {console.log(response);},
-      (error) => {console.log(error);}
-    );
+  addConference(conference: Conference): Observable<Object> {
+    return this.httpClient.post(this.confUrl, conference);
   }
   
-  updateConference(conference: Conference) {
+  updateConference(conference: Conference): Observable<Object> {
     const targetUrl = this.dbUrl + conference['id'] + '.json';
-    return this.httpClient.patch(targetUrl, conference).subscribe(
-      (response) => {console.log(response);},
-      (error) => {console.log(error);}
-    );
+    return this.httpClient.patch(targetUrl, conference);
   }
   
-  deleteConference(conference: Conference) {
+  deleteConference(conference: Conference): Observable<Object> {
     const targetUrl = this.dbUrl + conference['id'] + '.json';
-    return this.httpClient.delete(targetUrl).subscribe(
-      (response) => {console.log(response);},
-      (error) => {console.log(error);}
-    );
+    return this.httpClient.delete(targetUrl);
   }
   
   putAllConferences(conferences: Conference[]) {
     conferences.forEach(
       (conference) => {
-        // this.addConference(conference);
-        this.updateConference(conference);
+        this.addConference(conference).subscribe();
+        // this.updateConference(conference);
       })
   }
 }

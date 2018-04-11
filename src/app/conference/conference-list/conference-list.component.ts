@@ -27,4 +27,8 @@ export class ConferenceListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subs.unsubscribe();
   }
+  
+  onClick() {
+    // this.dataService.putAllConferences(this.cService.conferences);
+  }
 }
