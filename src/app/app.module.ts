@@ -8,9 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 
-import { ConferenceService }  from './conference/conference.service';
-import { DataService } from './util/data.service';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +19,7 @@ import { DataService } from './util/data.service';
     AppRoutingModule,
     NgbModule.forRoot(),
   ],
-  providers: [ConferenceService, DataService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

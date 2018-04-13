@@ -1,0 +1,16 @@
+<div class="row">
+  <div
+    class="col-1"
+    placement="top"
+    [ngbTooltip]="(segment.start_time | number:'.2-2') + ' - ' + (segment.end_time | number:'.2-2')">
+    {{ segment.speaker_label }}:
+  </div>
+  <div class="col-11">
+    <div class="row">
+      <div *ngFor="let item of segment.items">
+        <app-item [item]="item"></app-item>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>

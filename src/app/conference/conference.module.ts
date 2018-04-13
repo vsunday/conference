@@ -10,6 +10,9 @@ import { ConferenceListComponent } from './conference-list/conference-list.compo
 import { ConferenceItemComponent } from './conference-item/conference-item.component';
 import { ConferenceEditComponent } from './conference-edit/conference-edit.component';
 
+import { ConferenceService }  from './conference.service';
+import { DataService } from '../util/data.service';
+
 
 @NgModule({
   declarations:[
@@ -25,6 +28,6 @@ import { ConferenceEditComponent } from './conference-edit/conference-edit.compo
     ConferenceRoutingModule,
   ],
   exports:[],
-  providers: [],
+  providers: [ConferenceService, DataService],
 })
 export class ConferenceModule {}
