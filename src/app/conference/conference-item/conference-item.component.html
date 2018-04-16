@@ -9,7 +9,10 @@
   <p class="mb-1">
     <small class="text-muted">
       {{ conference.startdate }} - {{ conference.enddate != '' ? conference.enddate : '(blank)' }}
-      <a class="text-right" [href]="conference.url" target="_blank">link</a>
+      <a class="text-right"
+        [href]="conference.url"
+        target="_blank"
+        (click)="onClick($event)">link</a>
     </small>
   </p>
 </a>

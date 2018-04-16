@@ -25,4 +25,9 @@ export class ConferenceItemComponent implements OnInit {
     ]
     return 'list-group-item list-group-item-action ' + classList[this.conference.attendance];
   }
+  
+  onClick(event) {
+    console.log(event);
+    event.stopPropagation();
+  }
 }

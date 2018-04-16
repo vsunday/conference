@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/do';
 
 import { DataService } from '../util/data.service';
 
@@ -38,13 +40,13 @@ export class ConferenceService {
   
   conferences: Conference[] = [];
   
-  changed = new Subject<Conference[]>();
+  changed = new Subject<any>();
   
-  getConferences() {
-    this.dataService.getAllConferences().subscribe(
+  getConferences(): Observable<Conference[]> {
+     return this.dataService.getAllConferences().map(
       (data) => {
         this.conferences = this.sortConference(Object.values(data));
-        this.changed.next(this.conferences);
+        return this.conferences.slice();
       }
     );
   }
@@ -63,18 +65,27 @@ export class ConferenceService {
         newConference.id = id;
         this.dataService.updateConference(newConference).subscribe(
           () => {
-            this.getConferences();})
+            this.getConferences();
+            this.changed.next();
+          })
         });
   }
   
   updateConference(newConference: Conference) {
+    console.log('updateConference');
     this.dataService.updateConference(newConference).subscribe(
-      () => {this.getConferences();});
+      () => {
+        this.getConferences().subscribe();
+        this.changed.next();
+      });
   }
   
   deleteConference(conference: Conference) {
     this.dataService.deleteConference(conference).subscribe(
-      () => {this.getConferences();})
+      () => {
+        this.getConferences().subscribe();
+        this.changed.next()
+      });
   }
   
   sortConference(conferences: Conference[]): Conference[] {

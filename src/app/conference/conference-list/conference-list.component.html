@@ -1,5 +1,5 @@
 <div class="list-group">
   <app-conference-item
-    *ngFor="let conference of conferences"
+    *ngFor="let conference of (conferences|async)"
     [conference]="conference"></app-conference-item>
 </div>

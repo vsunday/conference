@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 
 import { ConferenceService } from '../conference.service';
 import { DataService } from '../../util/data.service';
@@ -12,23 +13,19 @@ import { Conference } from "../conference.model";
   styleUrls: ['./conference-list.component.css']
 })
 export class ConferenceListComponent implements OnInit, OnDestroy {
-  conferences: Conference[] = [];
+  conferences: Observable<Conference[]>;
   subs: Subscription;
 
-  constructor(private cService: ConferenceService, private dataService: DataService) { }
+  constructor(private cService: ConferenceService, private dataService: DataService) {}
 
   ngOnInit() {
+    this.conferences = this.cService.getConferences();
     this.subs = this.cService.changed.subscribe(
-      (conferences: Conference[]) => {
-        this.conferences = conferences;
-      })
+      (data) => {this.conferences = this.cService.getConferences();}
+    );
   }
 
   ngOnDestroy() {
     this.subs.unsubscribe();
-  }
-  
-  onClick() {
-    // this.dataService.putAllConferences(this.cService.conferences);
   }
 }
