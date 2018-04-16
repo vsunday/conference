@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { ThresholdService } from '../../util/threshold.service';
+import { ThresholdService } from '../../../util/threshold.service';
 
-import { Item } from '../item.model';
+import { Item } from './item.model';
 
 @Component({
   selector: 'app-item',

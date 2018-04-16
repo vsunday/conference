@@ -1,5 +1,6 @@
 <div class="row">
     <font color="red">red words </font>= word confidence less than&nbsp;<input class="form-control" type="number" [(ngModel)]="threshold" (keyup)="onChange()">
+    <button type="button" (click)="onClick()">Download</button>
 </div>
 <hr>
 <div *ngFor="let segment of segments">

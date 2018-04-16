@@ -7,10 +7,11 @@ import { TranscRoutingModule } from './transc-routing.module';
 
 import { JsonService } from '../util/json.service';
 import { ThresholdService } from '../util/threshold.service';
+import { SegmentService } from './segment/segment.service';
 
 import { TranscComponent } from './transc.component';
 import { SegmentComponent } from './segment/segment.component';
-import { ItemComponent } from './item/item.component';
+import { ItemComponent } from './segment/item/item.component';
 
 @NgModule({
   declarations:[
@@ -25,6 +26,6 @@ import { ItemComponent } from './item/item.component';
     TranscRoutingModule,
   ],
   exports:[],
-  providers: [JsonService, ThresholdService],
+  providers: [JsonService, ThresholdService, SegmentService],
 })
 export class TranscModule {}
