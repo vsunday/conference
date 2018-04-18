@@ -1,5 +1,4 @@
-<!--<button type="button" class="btn btn-outline-dark">{{ item.content }}</button>-->
-<div [ngStyle]="{'color': color}" (click)="editMode=!editMode; touched=true">
+<div [ngStyle]="{'color': color}" (dblclick)="onDblclick()">
   <div *ngIf="!editMode else elseBlock">
     {{ item.content }}&nbsp;
   </div>

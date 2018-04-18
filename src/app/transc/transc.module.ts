@@ -12,12 +12,14 @@ import { SegmentService } from './segment/segment.service';
 import { TranscComponent } from './transc.component';
 import { SegmentComponent } from './segment/segment.component';
 import { ItemComponent } from './segment/item/item.component';
+import { DisplayTimePipe } from './segment/display-time.pipe';
 
 @NgModule({
   declarations:[
     TranscComponent,
     SegmentComponent,
-    ItemComponent
+    ItemComponent,
+    DisplayTimePipe
   ],
   imports:[
     CommonModule,

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Subject } from 'rxjs/Subject';
 
 import { saveAs } from 'file-saver/FileSaver';
 
@@ -16,14 +17,21 @@ export class SegmentService {
   }
   
   segments: Segment[] = [];
+  speakers: Object = {};
+  changeSpeakers = new Subject<string>();
   
   //initial load
   private init(url: string) {
     this.jsonService.getJson(url).subscribe(
       (data) => {
         data.forEach(
-          (element) => {this.segments.push(element);}
-        )});
+          (element) => {
+            this.segments.push(element);
+            if (this.speakers[element.speaker_label] == null) {
+              this.speakers[element.speaker_label] = element.speaker_label;
+            }
+        });
+      });
   }
   
   //save or output segments info
@@ -31,7 +39,7 @@ export class SegmentService {
     let result = [];
     for (let i=0; i<this.segments.length; i++) {
       const segment = this.segments[i];
-      const speaker_label = segment.speaker_label;
+      const speaker_label = this.speakers[segment.speaker_label];
       let items = [];
       for (let j=0; j<segment.items.length; j++) {
         items.push(segment.items[j].content);

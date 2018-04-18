@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
 
 import { ThresholdService } from '../../../util/threshold.service';
 
@@ -13,22 +14,33 @@ import { Item } from './item.model';
 export class ItemComponent implements OnInit, OnDestroy {
   @Input() item: Item;
   threshold: number = 0.95;
-  s: Subscription;
+  s: Subscription[];
+  changeTouched = new Subject<any>();
   color: string;
-  editMode: false;
-  touched: false;
+  editMode: boolean = false;
+  touched: boolean = false;
 
   constructor(private tService: ThresholdService) { }
 
   ngOnInit() {
     this.color = this.getColor();
-    this.s = this.tService.thresholdChange.subscribe(
+    this.s = [this.tService.thresholdChange.subscribe(
       (x) => {
         this.threshold = x;
         this.color = this.getColor();
-      })
+      }),
+      this.changeTouched.subscribe(
+        () => {
+          this.color = this.getColor();
+      })]
   }
   
+ ngOnDestroy() {
+   this.s.forEach(
+     (element) => {element.unsubscribe();}
+   );
+ }
+ 
   getColor(): string {
     if (this.touched) {
       return 'blue';
@@ -37,13 +49,15 @@ export class ItemComponent implements OnInit, OnDestroy {
       return confidence > this.threshold ? 'black' : 'red';
     }
   }
-
- ngOnDestroy() {
-   this.s.unsubscribe();
- }
  
  getWidth(): string {
    const length = this.item.content.length;
    return length * 0.75 + 'rem';
+ }
+ 
+ onDblclick() {
+   this.editMode = !this.editMode;
+   this.touched = true;
+   this.changeTouched.next();
  }
 }

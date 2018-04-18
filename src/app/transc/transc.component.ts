@@ -26,9 +26,8 @@ export class TranscComponent implements OnInit {
   }
   
   onClick() {
-    // this.segmentService.outputSegmentsData();
-    // this.segmentService.download();
-    this.segmentService.downloadJson();
+    this.segmentService.download();
+    // this.segmentService.downloadJson();
   }
 
 }

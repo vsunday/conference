@@ -1,11 +1,20 @@
 <div class="row">
-  <div
-    class="col-1"
-    placement="top"
-    [ngbTooltip]="(segment.start_time | number:'.2-2') + ' - ' + (segment.end_time | number:'.2-2')">
-    {{ segment.speaker_label }}:
+  <div class="col-2" (dblclick)="editMode=!editMode">
+    <div
+      *ngIf="!editMode else elseBlock"
+      placement="top"
+      [ngbTooltip]="(segment.start_time | displayTime) + ' - ' + (segment.end_time | displayTime)">
+      {{ speaker }}:
+    </div>
+    <ng-template #elseBlock>
+      <input
+        type="text"
+        class="form-control"
+        (keyup)="onChange()"
+        [(ngModel)]="speaker">
+    </ng-template>
   </div>
-  <div class="col-11">
+  <div class="col-10">
     <div class="row">
       <div *ngFor="let item of segment.items">
         <app-item [item]="item"></app-item>
