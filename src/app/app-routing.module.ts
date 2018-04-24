@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 const appRoutes: Routes = [
   {path: 'conference', loadChildren: './conference/conference.module#ConferenceModule'},
   {path: 'transc', loadChildren: './transc/transc.module#TranscModule'},
+  {path: 'spire', loadChildren: './spire/spire.module#SpireModule'},
   {path: '**', redirectTo: 'conference', pathMatch: 'full'},
 ]
 
