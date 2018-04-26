@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./streaks-view.component.css']
 })
 export class StreaksViewComponent implements OnInit {
-
+  
   constructor() { }
 
   ngOnInit() {
