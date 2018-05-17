@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
+import { Subject,  Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { DataService } from '../util/data.service';
 
@@ -43,12 +42,12 @@ export class ConferenceService {
   changed = new Subject<any>();
   
   getConferences(): Observable<Conference[]> {
-     return this.dataService.getAllConferences().map(
+     return this.dataService.getAllConferences().pipe(map(
       (data) => {
         this.conferences = this.sortConference(Object.values(data));
         return this.conferences.slice();
       }
-    );
+    ));
   }
   
   getConference(id: string): Conference {

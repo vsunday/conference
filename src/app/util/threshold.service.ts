@@ -1,4 +1,4 @@
-import { Subject} from 'rxjs/Subject';
+import { Subject} from 'rxjs';
 
 export class ThresholdService {
   thresholdChange = new Subject<number>();

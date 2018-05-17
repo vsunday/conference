@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 import { saveAs } from 'file-saver/FileSaver';
 

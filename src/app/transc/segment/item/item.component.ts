@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { Subject } from 'rxjs/Subject';
+import { Subscription,  Subject } from 'rxjs';
 
 import { ThresholdService } from '../../../util/threshold.service';
 
